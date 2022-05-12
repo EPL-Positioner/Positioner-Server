@@ -38,9 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'Position',
+    'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -52,10 +57,15 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'Positioner.urls'
 
+import os
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'Positioner-Client', 'build'),
+        ],
+
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -117,3 +127,19 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ]
+}
+
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000',
+]
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'Positioner-Client', 'build', 'static')
+]
+
+CORS_ORIGIN_ALLOW_ALL = True
